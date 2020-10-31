@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Tambah Data Peminjaman</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Tambah Data Baru</a>
 </p>
 <table class="table">
     <thead>
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.TglPeminjaman)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdKendaraan)
+                @Html.DisplayNameFor(model => model.Biaya) 
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdCustomer)
@@ -25,8 +25,11 @@
                 @Html.DisplayNameFor(model => model.IdJaminan)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Biaya)
+                @Html.DisplayNameFor(model => model.IdKendaraan)
             </th>
+
+
+
             <th></th>
         </tr>
     </thead>
@@ -37,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.TglPeminjaman)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdKendaraan)
+                @Html.DisplayFor(modelItem => item.Biaya)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdCustomer)
@@ -46,12 +49,13 @@
                 @Html.DisplayFor(modelItem => item.IdJaminan)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Biaya)
+                @Html.DisplayFor(modelItem => item.IdKendaraan)
             </td>
+
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdPeminjaman">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdPeminjaman">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdPeminjaman">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.IdPeminjaman"><i class="glyphicon glyphicon-pencil"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.IdPeminjaman"><i class="list-group-item"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPeminjaman"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
 }

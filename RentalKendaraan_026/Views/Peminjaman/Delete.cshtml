@@ -4,9 +4,9 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<h2>Hapus Data Peminjaman</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Apakah anda yakin ingin menghapus data ini</h3>
 <div>
     <h4>Peminjaman</h4>
     <hr />
@@ -18,10 +18,10 @@
             @Html.DisplayFor(model => model.TglPeminjaman)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.IdKendaraan)
+            @Html.DisplayNameFor(model => model.Biaya)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.IdKendaraan)
+            @Html.DisplayFor(model => model.Biaya)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.IdCustomer)
@@ -36,16 +36,17 @@
             @Html.DisplayFor(model => model.IdJaminan)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Biaya)
+            @Html.DisplayNameFor(model => model.IdKendaraan)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Biaya)
+            @Html.DisplayFor(model => model.IdKendaraan)
         </dd>
+
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdPeminjaman" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Hapus" class="btn btn-default" /> |
+        <a asp-action="Index">Kembali</a>
     </form>
 </div>
