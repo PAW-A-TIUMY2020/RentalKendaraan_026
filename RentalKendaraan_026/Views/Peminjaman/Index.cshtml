@@ -27,9 +27,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.IdKendaraan)
             </th>
-
-
-
             <th></th>
         </tr>
     </thead>
@@ -54,10 +51,13 @@
 
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdPeminjaman"><i class="glyphicon glyphicon-pencil"></i></a> |
-                <a asp-action="Details" asp-route-id="@item.IdPeminjaman"><i class="list-group-item"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.IdPeminjaman">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.IdPeminjaman"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+*yg details engga nemu iconnya kak maaf hehe
