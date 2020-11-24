@@ -8,7 +8,7 @@ namespace RentalKendaraan_026.Models
     {
         public int IdJenisKendaraan { get; set; }
 
-        [Required(ErrorMessage = "Nama Jenis Kendaraan wajib diisi")]]
+        [Required(ErrorMessage = "Nama Jenis Kendaraan wajib diisi")]
         public string NamaJenisKendaraan { get; set; }
     }
 }

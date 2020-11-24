@@ -9,51 +9,66 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NamaCustomer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nik)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Alamat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoHp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdGender)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NamaCustomer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nik)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Alamat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NoHp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdGender)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdCustomer">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdCustomer">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdCustomer">Delete</a>
-            </td>
-        </tr>
+
+@using (Html.BeginForm("Index", "Customer", FormMethod.Get))
+{
+    <p>
+        Berdasarkan Gender : @Html.DropDownList("ktsd", "Pilih Gender")
+        Cari Data : @Html.TextBox("searchString")
+        <input type="submit" value="Filter" />
+    </p>
 }
-    </tbody>
-</table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                        Nama
+                    </a>
+                </th>
+                <th>
+                    NIK
+                </th>
+                <th>
+                    Alamat
+                </th>
+                <th>
+                    NoHp
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                        Gender
+                    </a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NamaCustomer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nik)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Alamat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoHp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdGenderNavigation.IdGender)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdCustomer"></a> |
+                        <a asp-action="Details" asp-route-id="@item.IdCustomer"></a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdCustomer"></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
