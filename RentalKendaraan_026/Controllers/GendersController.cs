@@ -38,7 +38,33 @@ namespace RentalKendaraan_026.Controllers
                 menu = menu.Where(s => s.NamaGender.Contains(searchString));
             }
 
-            return View(await _context.Gender.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    menu = menu.OrderByDescending(s => s.NamaGender);
+                    break;
+                default:
+                    menu = menu.OrderBy(s => s.NamaGender);
+                    break;
+            }
+
+            ViewData["CurrentSort"] = sortOrder;
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 5;
+
+            return View(await PaginatedList<Gender>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Genders/Details/5

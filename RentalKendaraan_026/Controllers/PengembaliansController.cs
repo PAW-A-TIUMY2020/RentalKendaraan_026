@@ -39,7 +39,41 @@ namespace RentalKendaraan_026.Controllers
                 || s.IdPeminjamanNavigation.ToString().Contains(searchString));
             }
 
-            return View(await _context.Pengembalian.ToListAsync());
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    menu = menu.OrderByDescending(s => s.Denda);
+                    break;
+                case "Date":
+                    menu = menu.OrderBy(s => s.TglPengembalian);
+                    break;
+                case "date_desc":
+                    menu = menu.OrderByDescending(s => s.TglPengembalian);
+                    break;
+                default:
+                    menu = menu.OrderBy(s => s.Denda);
+                    break;
+            }
+
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 5;
+
+            return View(await PaginatedList<Pengembalian>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Pengembalians/Details/5

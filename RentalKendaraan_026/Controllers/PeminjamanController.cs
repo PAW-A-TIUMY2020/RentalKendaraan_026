@@ -38,7 +38,46 @@ namespace RentalKendaraan_026.Controllers
                 menu = menu.Where(s => s.TglPeminjaman.ToString().Contains(searchString) || s.Biaya.ToString().Contains(searchString) || s.IdCustomerNavigation.ToString().Contains(searchString)
                 || s.IdJaminanNavigation.ToString().Contains(searchString));
             }
-            return View(await _context.Peminjaman.ToListAsync());
+
+
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    menu = menu.OrderByDescending(s => s.IdCustomerNavigation.NamaCustomer);
+                    break;
+                case "Date":
+                    menu = menu.OrderBy(s => s.TglPeminjaman);
+                    break;
+                case "date_desc":
+                    menu = menu.OrderByDescending(s => s.TglPeminjaman);
+                    break;
+                default:
+                    menu = menu.OrderBy(s => s.IdCustomerNavigation.NamaCustomer);
+                    break;
+            }
+
+
+            //membuat pagelist
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 5;
+
+
+
+            return View(await PaginatedList<Peminjaman>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Peminjaman/Details/5

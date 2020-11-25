@@ -38,9 +38,37 @@ namespace RentalKendaraan_026.Controllers
                 menu = menu.Where(s => s.NamaJenisKendaraan.Contains(searchString));
             }
 
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
-            return View(await _context.JenisKendaraan.ToListAsync());
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    menu = menu.OrderByDescending(s => s.NamaJenisKendaraan);
+                    break;
+                default:
+                    menu = menu.OrderBy(s => s.NamaJenisKendaraan);
+                    break;
+            }
+
+
+            ViewData["CurrentSort"] = sortOrder;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 5;
+
+            return View(await PaginatedList<JenisKendaraan>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
+
 
         // GET: JenisKendaraans/Details/5
         public async Task<IActionResult> Details(int? id)

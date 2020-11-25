@@ -37,12 +37,25 @@ namespace RentalKendaraan_026.Controllers
             {
                 menu = menu.Where(s => s.NamaKondisi.Contains(searchString));
             }
+            ViewData["CurrentSort"] = sortOrder;
 
-            return View(await _context.KondisiKendaraan.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 5;
+
+            return View(await PaginatedList<KondisiKendaraan>.CreateAsync(menu.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
-        // GET: KondisiKendaraans/Details/5
-        public async Task<IActionResult> Details(int? id)
+            // GET: KondisiKendaraans/Details/5
+            public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
